@@ -10,7 +10,7 @@ if [ $# -eq 0 ]
     exit
 fi
 
-hash = $(git rev-parse HEAD)
+hash=$(git rev-parse HEAD)
 
 container_name=network-api-$hash
 
