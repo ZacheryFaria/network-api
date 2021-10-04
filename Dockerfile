@@ -1,7 +1,5 @@
 FROM python:3.9.7-buster
 
-RUN apt update -y && apt install -y nmap
-
 COPY requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
