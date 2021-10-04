@@ -27,6 +27,3 @@ echo "Logs for $container_name starting below" >> ./network-api.log
 sudo docker rm network-api || true
 
 sudo docker run --restart always -dp 8000:8000 --name network-api $container_name
-
-sudo docker system prune -f
-sudo docker image prune -af
