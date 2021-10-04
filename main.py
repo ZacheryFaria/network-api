@@ -1,23 +1,33 @@
 from fastapi import FastAPI
-import nmap
 from threading import Thread
 import time
-
-nm = nmap.PortScanner()
+import requests
+import re
 
 app = FastAPI()
 
 cache = {}
 
+exp = re.compile(r'Nmap scan report for (.*) \((.*)\)')
+
 
 def get_nmap_data():
-    results = nm.scan('192.168.1.*', arguments='-sn')
-    return {k: results['scan'][k]['hostnames'][0]['name'] for k in results['scan'].keys()}
+    result = requests.get('http://192.168.1.164/nmap')
+    txt = result.text.strip()
+    output = {}
+    for row in txt.split('\n'):
+        res = exp.match(row)
+        output[res[2]] = res[1]
+
+
+    return output
 
 
 def update_nmap_results():
     global cache
     while True:
+        cache = get_nmap_data()
+        time.sleep(5)
         tmp = get_nmap_data()
         time.sleep(5)
         tmp.update(get_nmap_data())
