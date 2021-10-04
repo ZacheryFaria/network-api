@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 import nmap
-from cachetools import TTLCache, cached
 from threading import Thread
 import time
 
